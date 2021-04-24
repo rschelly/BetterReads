@@ -4,7 +4,7 @@ const path = require('path');
 
 // const userController = require("./controllers/userController");
 // const cookieController = require("./controllers/cookieController");
-//const sessionController = require("./controllers/sessionController");
+// const sessionController = require("./controllers/sessionController");
 // note from kerri - commented out session controller temp due to node errors
 
 const app = express();
@@ -14,12 +14,26 @@ const apiRouter = require('./api/api_router.js');
 const libraryRouter = require('./api/libraryRouter.js');
 
 app.use(express.json());
-app.use(express.static(path.join(__dirname, './client/html-scss')));
+app.use(express.urlencoded({extended: true}));
 
-// app.get("/", cookieController.setSSIDCookie, (req, res) => {
-//     res.render("./../client/html-scss/login")
-// })
+
+app.get("/", (req, res) => {
+  res.redirect('/login');
+})
 // note from kerri - commented out cookieController.setCookie temp due to node errors
+
+//paths for static files
+app.get('/login', (req, res) => {
+  res.sendFile(path.join(__dirname, '../html-scss/login.html'))
+});
+
+app.get('/signup', (req, res) => {
+  res.sendFile(path.join(__dirname, '../html-scss/signup.html'))
+});
+
+app.get('/home', (req, res) => {
+  res.sendFile(path.join(__dirname, '../html-scss/index.html'))
+});
 
 // app.use('/api', apiRouter)
 app.use('/db', libraryRouter);
