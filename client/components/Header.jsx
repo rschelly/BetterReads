@@ -1,5 +1,9 @@
 import React from 'react';
 
-export default Header = () => {
-  return <div></div>;
-};
+export default function Header() {
+  return (
+    <header>
+      <h1>BetterReads</h1>
+    </header>
+  );
+}

@@ -1,13 +1,17 @@
 - App
   - Home
     - Header
-    - Search
-      - SearchResults
-        - Search Book
     - NavBar
+      - Profile
+      - Main (Home)
       - MyBooks
+        - Book
+      - To Be Read
         - Book
       - Complete
         - Book
       - Reviews
         - Review
+      - Search
+        - SearchResults
+          - Search Book
