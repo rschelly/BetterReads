@@ -45,15 +45,9 @@ const pool = new Pool({
 // (_id: 3, title: 'third title', author: 'third author', page_count: 45, cover_url: 'coverurl', isbn: 87654)
 
 // BOOK LIST :
-<<<<<<< HEAD
-// (_id: 1, book_id: 1, user_id: 1, status: 'in progress', page_num: 10)
-// (_id: 2, book_id: 2, user_id: 1, status: 'to be read', page_num: 0)
-// (_id: 3, book_id: 3, user_id: 1, status: 'completed', page_num: 0)
-=======
 // (_id: 1, book_id: 1, user_id: 1, status: 'in progress', page_number: 10)
 // (_id: 2, book_id: 2, user_id: 1, status: 'to be read', page_number: 0)
 // (_id: 3, book_id: 3, user_id: 1, status: 'completed', page_number: 0)
->>>>>>> 5738f0c2f65aa56b18c3b03533fc2543e9560fc9
 
 // REVIEW LIST - (_id: 1, book_id: 3, user_id: 1, stars: 4, review: 'great')
 
