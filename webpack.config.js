@@ -21,17 +21,17 @@ module.exports = {
         test: /\.(sa|sc|c)ss$/,
         use: ['style-loader', 'css-loader', 'sass-loader'],
       },
-      //   {
-      //     test: /\.(png|jpg|gif|woff|woff2|eot|ttf|svg|ico)$/,
-      //     use: [
-      //       {
-      //         loader: "url-loader",
-      //         options: {
-      //         limit: 8192,
-      //         },
-      //       },
-      //     ],
-      //   },
+      {
+        test: /\.(png|jpg|gif|woff|woff2|eot|ttf|svg|ico)$/,
+        use: [
+          {
+            loader: "url-loader",
+            options: {
+            limit: 8192,
+            },
+          },
+        ],
+      },
     ],
   },
   devServer: {

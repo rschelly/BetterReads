@@ -16,7 +16,7 @@ libraryController.getToBeRead = (req, res, next) => {
   const tbrResults = db.query(querySelector, userID);
   tbrResults
     .then((data) => {
-      console.log(data.rows);
+      res.locals.toberead = data;
       // decide how results are being returned to front end?
       next();
     })
@@ -42,7 +42,7 @@ libraryController.getCurrentlyReading = (req, res, next) => {
   const currentResults = db.query(querySelector, userID);
   currentResults
     .then((data) => {
-      console.log(data.rows);
+      res.locals.current = data;
       // decide how results are being returned to front end?
       next();
     })
@@ -70,7 +70,7 @@ libraryController.getCompleted = (req, res, next) => {
   const completedResults = db.query(querySelector, userID);
   completedResults
     .then((data) => {
-      console.log(data.rows);
+      res.locals.complete = data;
       // decide how results are being returned to front end?
       next();
     })

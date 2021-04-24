@@ -1,14 +1,24 @@
 const express = require('express');
 const path = require('path');
+const mongoose = require('mongoose');
 // const cookieParser = require('cookie-parser');
 
-const userController = require("./controllers/userController");
+const userController = require('./controllers/userController');
 // const cookieController = require("./controllers/cookieController");
 // const sessionController = require("./controllers/sessionController");
 // note from kerri - commented out session controller temp due to node errors
 
 const app = express();
 const PORT = 3000;
+
+const mongoURI =
+  'mongodb+srv://rschelly:mongopassword@cluster0.b5qc7.mongodb.net/betterreads?retryWrites=true&w=majority';
+mongoose.connect(mongoURI);
+const { connection } = mongoose;
+
+connection.once('open', () => {
+  console.log('connected to mongoose using once');
+});
 
 const apiRouter = require('./api/api_router.js');
 const libraryRouter = require('./api/libraryRouter.js');
@@ -17,7 +27,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
-  res.redirect('/login');
+  res.redirect('/home');
 });
 // note from kerri - commented out cookieController.setCookie temp due to node errors
 
@@ -26,8 +36,12 @@ app.get('/login', (req, res) => {
   res.sendFile(path.join(__dirname, '../html-scss/login.html'));
 });
 
-app.post('/login', userController.createUser, (req,res) => {
-  res.status(200).json({username: res.locals.username, id: res.locals.id});
+app.post('/signup', userController.createUser, (req, res) => {
+  res.redirect('/home');
+});
+
+app.post('/login', userController.verifyUser, (req, res) => {
+  res.redirect('home');
 });
 
 app.get('/signup', (req, res) => {
@@ -38,7 +52,7 @@ app.get('/home', (req, res) => {
   res.sendFile(path.join(__dirname, '../html-scss/index.html'));
 });
 
-app.use('/api', apiRouter);
+app.get('/api', apiRouter);
 app.use('/db', libraryRouter);
 
 // catch all for requests to unknown route
