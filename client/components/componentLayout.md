@@ -3,7 +3,10 @@
     - Header
     - NavBar
       - Profile
+      - Main (Home)
       - MyBooks
+        - Book
+      - To Be Read
         - Book
       - Complete
         - Book
