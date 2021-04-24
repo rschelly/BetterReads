@@ -1,5 +1,5 @@
 import React from 'react';
 
-export default Book = () => {
+export default function Book() {
   return <div></div>;
-};
+}

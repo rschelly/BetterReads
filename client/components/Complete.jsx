@@ -1,6 +1,10 @@
 import React from 'react';
 import Book from './Book.jsx';
 
-export default Complete = () => {
-  return <div></div>;
-};
+export default function Complete() {
+  return (
+    <div>
+      <h2>You have reached the Complete page</h2>
+    </div>
+  );
+}

@@ -1,9 +1,6 @@
 - App
   - Home
     - Header
-      - Search
-      - SearchResults
-        - Search Book
     - NavBar
       - Profile
       - MyBooks
@@ -12,3 +9,6 @@
         - Book
       - Reviews
         - Review
+      - Search
+        - SearchResults
+          - Search Book

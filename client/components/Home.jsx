@@ -4,14 +4,11 @@ import NavBar from './NavBar.jsx';
 
 // access username
 
-export default Home = () => {
+export default function Home() {
   return (
     <div>
       <Header />
       <NavBar />
-      <div className='home'>
-        <h1>Welcome, username!</h1>
-      </div>
     </div>
   );
-};
+}
