@@ -6,9 +6,9 @@ import NavBar from './NavBar.jsx';
 
 export default function Home() {
   return (
-    <div>
+    <main>
       <Header />
       <NavBar />
-    </div>
+    </main>
   );
 }
