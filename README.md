@@ -11,7 +11,7 @@ To Be Started -
     - Route handler for submission of form data to database 
 
 ### Log into Account 
-- [ ] Front End:
+- ✅ Front End:
         - Section on log in page to log in with previously saved username and password
 - [ ] Back End: 
         - Access and verify username and passwords from database. Bcrypt? Plain text? 

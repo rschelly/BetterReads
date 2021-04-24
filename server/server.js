@@ -16,10 +16,16 @@ const libraryRouter = require('./api/libraryRouter.js');
 app.use(express.json());
 app.use(express.static(path.join(__dirname, './client/html-scss')));
 
-// app.get("/", cookieController.setSSIDCookie, (req, res) => {
-//     res.render("./../client/html-scss/login")
-// })
+app.get("/", (req, res) => {
+    res.redirect((path.join(__dirname, "../client/html-scss/login")));
+})
 // note from kerri - commented out cookieController.setCookie temp due to node errors
+
+app.get("/login", (res, req) => {
+  console.log('login')
+  res.sendFile(path.resolve(__dirname, "../client/html-scss/login.html"));
+  console.log('login after')
+})
 
 // app.use('/api', apiRouter)
 app.use('/db', libraryRouter);
