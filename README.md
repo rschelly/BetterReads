@@ -4,10 +4,11 @@ This  project is designed to create an application that will allow users easy ac
 
 To Be Started - 
 ### Create an Account
- -  ✅ Front End:
+ -  [ ] Front End:
     - Section on log in page to create an account with input boxes
  - [ ] Back End: 
     - Store username and passwords in database. Bcrypt? Or plain text? 
+    ✅ Set up mongoose schema for user
     - Route handler for submission of form data to database 
 
 ### Log into Account 
