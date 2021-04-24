@@ -7,4 +7,9 @@ const cookieController = {};
 cookieController.setSSIDCookie = (req, res, next) => {
     User.findOne({
         username: req.body.username
-    }, '_id')}
+    })
+    .exec()
+    .then(() => {
+        
+    });
+}
