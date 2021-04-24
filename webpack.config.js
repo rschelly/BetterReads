@@ -1,4 +1,5 @@
 module.exports = {
+  mode: process.env.NODE_ENV,
   entry: './client/index.js',
   output: {
     path: __dirname + '/public',
@@ -12,7 +13,7 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env', '@babel-preset-react']
+            presets: ['@babel/preset-env', '@babel/preset-react']
           }
         }
       },
