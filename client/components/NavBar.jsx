@@ -13,7 +13,7 @@ export default function NavBar() {
     <Router>
       <nav>
         <Profile />
-        <Link to='/home'>Home</Link>
+        <Link to='/newHome'>Home</Link>
         <Link to='/MyBooks'>My Books</Link>
         <Link to='/ToBeRead'>To Be Read</Link>
         <Link to='/Complete'>Complete</Link>
@@ -21,8 +21,8 @@ export default function NavBar() {
         <Link to='/Search'>Search</Link>
       </nav>
       <Switch>
-        <Route exact path='/' component={Main} />
         <Route exact path='/home' component={Main} />
+        <Route exact path='/newHome' component={Main} />
         <Route path='/MyBooks' component={MyBooks} />
         <Route path='/ToBeRead' component={ToBeRead} />
         <Route path='/Complete' component={Complete} />

@@ -29,15 +29,15 @@ userController.createUser = (req, res, next) => {
   User.create({
     username: req.body.username,
     password: req.body.password,
-  })
-    .exec()
-    //then take the cookie object id and turn it into a number. Basically change the ugly ssid number into something legible.
-    .then((response) => {
-      res.locals.username = req.body.username;
-      res.locals.id = response._doc._id.toHexString();
-      return next();
-    })
+  },
+  (err, newUser) => {
     //if an erorr occurs, redirect back to the sign up page
+    if(err) res.redirect('/signup');
+    //then take the cookie object id and turn it into a number. Basically change the ugly ssid number into something legible.
+    res.locals.username = req.body.username;
+    res.locals.id = response._doc._id.toHexString();
+    return next();
+  })
     .catch(() => res.render('./../client/html-scss/signup)'));
 };
 
