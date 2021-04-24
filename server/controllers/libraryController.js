@@ -66,13 +66,48 @@ libraryController.getCompleted = (req, res, next) => {
     .catch((err) => {
       return next({
         log:
-          'libraryController.getToBeRead: ERROR: Error getting list from database',
+          'libraryController.getCompleted: ERROR: Error getting list from database',
         message: {
           err:
-            'Error occurred in libraryController.getToBeRead. Check server logs for more details',
+            'Error occurred in libraryController.getCompleted. Check server logs for more details',
         },
       });
     });
 };
+
+libraryController.addToTBR = (req, res, next) => {
+  const querySelector = `INSERT INTO book_list (book_id, user_id, status, page_number) VALUES ($1, $2, 'to be read', 0)`;
+  // query Vars: BookID, UserID
+  const queryVars = ['1']
+
+  const addedResults = db.query(querySelector, queryVars).then(data => {
+    console.log(data.rows);
+    next();
+  }).catch(err => {
+    return next({
+      log:
+      'libraryController.addToTBR: ERROR: Error adding to database',
+    message: {
+      err:
+        'Error occurred in libraryController.addToTBR. Check server logs for more details',
+    },
+    })
+  })
+
+}
+
+// update Status 
+libraryController.updateStatus = (req, res, next) => {
+  // bood ID, user ID, status update
+}
+
+// add Review or Stars
+libraryController.addRating = (req, res, next) => {
+  // book ID, user ID, stars
+}
+
+libraryController.addReview = (req, res, next) => {
+  // book ID, user ID, review 
+}
 
 module.exports = libraryController;
