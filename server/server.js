@@ -9,7 +9,6 @@ const cookieController = require("./controllers/cookieController");
 const sessionController = require("./controllers/sessionController");
 //note from kerri - commented out session controller temp due to node errors
 
-
 const app = express();
 const PORT = 3000;
 
@@ -26,43 +25,26 @@ const apiRouter = require('./api/api_router.js');
 const libraryRouter = require('./api/libraryRouter.js');
 
 app.use(express.json());
-app.use(express.static(path.join(__dirname, './client/html-scss')));
+app.use(express.urlencoded({extended: true}));
+
 
 app.get("/", (req, res) => {
-    res.redirect((path.join(__dirname, "../client/html-scss/login")));
+  res.redirect('/login');
 })
 // note from kerri - commented out cookieController.setCookie temp due to node errors
 
-app.post("/signup", userController.createUser, (req, res) => {
-  // what should happen here on successful sign up?
-  res.send("new user created");
+//paths for static files
+app.get('/login', (req, res) => {
+  res.sendFile(path.join(__dirname, '../html-scss/login.html'))
 });
 
-// userController.createUser, cookieController.setSSIDCookie, sessionController.startSession,
-
-// app.get("/login", (res, req) => {
-//   console.log('login')
-//   res.sendFile(path.resolve(__dirname, "../client/html-scss/login.html"));
-//   console.log('login after')
-// })
-
-app.post("/login", cookieController.setSSIDCookie, sessionController.startSession, (req, res) => {
-  
-  res.send("successful login");
+app.get('/signup', (req, res) => {
+  res.sendFile(path.join(__dirname, '../html-scss/signup.html'))
 });
 
-// -userController.verifyUser, +cookieController.setSSIDCookie,  +sessionController.startSession
-
-app.get("/home", userController.getAllUsers, sessionController.isLoggedIn, (req, res) => {
-  /**
-   * The previous middleware has populated `res.locals` with users
-   * which we will pass this in to the res.render so it can generate
-   * the proper html from the `secret.ejs` template
-   */
-  res.render("./../client/home");
-  //, { users: res.locals.users });
+app.get('/home', (req, res) => {
+  res.sendFile(path.join(__dirname, '../html-scss/index.html'))
 });
-
 
 // app.use('/api', apiRouter)
 app.use('/db', libraryRouter);
