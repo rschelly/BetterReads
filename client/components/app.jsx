@@ -1,10 +1,6 @@
-import React, { Component } from 'react';
-import TopUI from './topui.jsx';
+import React from 'react';
+import Home from './Home.jsx';
 
-const App = (props) => (
-  <div>
-    <TopUI />
-  </div>
-);
-
-export default App;
+export default App = () => {
+  return <Home />;
+};
