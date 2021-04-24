@@ -14,25 +14,24 @@ const apiRouter = require('./api/api_router.js');
 const libraryRouter = require('./api/libraryRouter.js');
 
 app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 
-
-app.get("/", (req, res) => {
+app.get('/', (req, res) => {
   res.redirect('/login');
-})
+});
 // note from kerri - commented out cookieController.setCookie temp due to node errors
 
 //paths for static files
 app.get('/login', (req, res) => {
-  res.sendFile(path.join(__dirname, '../html-scss/login.html'))
+  res.sendFile(path.join(__dirname, '../html-scss/login.html'));
 });
 
 app.get('/signup', (req, res) => {
-  res.sendFile(path.join(__dirname, '../html-scss/signup.html'))
+  res.sendFile(path.join(__dirname, '../html-scss/signup.html'));
 });
 
 app.get('/home', (req, res) => {
-  res.sendFile(path.join(__dirname, '../html-scss/index.html'))
+  res.sendFile(path.join(__dirname, '../html-scss/index.html'));
 });
 
 // app.use('/api', apiRouter)
