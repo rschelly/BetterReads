@@ -1,10 +1,11 @@
 - App
   - Home
     - Header
-    - Search
+      - Search
       - SearchResults
         - Search Book
     - NavBar
+      - Profile
       - MyBooks
         - Book
       - Complete

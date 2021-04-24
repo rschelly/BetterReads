@@ -1,5 +1,10 @@
 import React from 'react';
 
 export default Header = () => {
-  return <div></div>;
+  return (
+    <div>
+      <h1>Better Reads</h1>
+      <Search />
+    </div>
+  );
 };
