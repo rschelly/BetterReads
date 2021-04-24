@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 // const cookieParser = require('cookie-parser');
 
-// const userController = require("./controllers/userController");
+const userController = require("./controllers/userController");
 // const cookieController = require("./controllers/cookieController");
 // const sessionController = require("./controllers/sessionController");
 // note from kerri - commented out session controller temp due to node errors
@@ -26,6 +26,10 @@ app.get('/login', (req, res) => {
   res.sendFile(path.join(__dirname, '../html-scss/login.html'));
 });
 
+app.post('/login', userController.createUser, (req,res) => {
+  res.status(200).json({username: res.locals.username, id: res.locals.id});
+});
+
 app.get('/signup', (req, res) => {
   res.sendFile(path.join(__dirname, '../html-scss/signup.html'));
 });
@@ -34,7 +38,7 @@ app.get('/home', (req, res) => {
   res.sendFile(path.join(__dirname, '../html-scss/index.html'));
 });
 
-// app.use('/api', apiRouter)
+app.use('/api', apiRouter);
 app.use('/db', libraryRouter);
 
 // catch all for requests to unknown route

@@ -30,6 +30,7 @@ userController.createUser = (req, res, next) => {
     username: req.body.username,
     password: req.body.password,
   })
+    .exec()
     //then take the cookie object id and turn it into a number. Basically change the ugly ssid number into something legible.
     .then((response) => {
       res.locals.username = req.body.username;
