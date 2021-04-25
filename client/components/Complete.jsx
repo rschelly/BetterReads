@@ -29,7 +29,9 @@ export default class Complete extends React.Component {
   //   }
   // ]
   componentDidMount() {
-    axios.get('/db/completed').then((data) => this.setState({ books: data }));
+    axios
+      .get('/db/completed')
+      .then((data) => this.setState({ books: data.data.rows }));
   }
   render() {
     return (
