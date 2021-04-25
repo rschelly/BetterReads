@@ -29,7 +29,10 @@ export default class MyBooks extends React.Component {
     return books;
   }
   componentDidMount() {
-    axios.get('/db/current').then((data) => this.setState({ books: data }));
+    axios.get('/db/current').then((data) => {
+      console.log(data.data.rows);
+      this.setState({ books: data.data.rows });
+    });
   }
   render() {
     return (

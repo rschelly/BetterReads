@@ -1,4 +1,6 @@
+import axios from 'axios';
 import React from 'react';
+import Book from './Book.jsx';
 
 export default class ToBeRead extends React.Component {
   constructor(props) {
@@ -13,6 +15,11 @@ export default class ToBeRead extends React.Component {
       books.push(<Book result={this.state.books[i]} />);
     }
     return books;
+  }
+  componentDidMount() {
+    axios
+      .get('/db/tbr')
+      .then((data) => this.setState({ books: data.data.rows }));
   }
   // fetch /db/tbr
   // [
