@@ -18,7 +18,11 @@ export default function Book(props) {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          props.updatePageNum(props.result.book_id, e.target[0].value);
+          props.updatePageNum(
+            props.result.book_id,
+            props.result.user_id,
+            e.target[0].value
+          );
         }}
       >
         <label>Please update new page number</label>
@@ -37,6 +41,7 @@ export default function Book(props) {
           e.preventDefault();
           props.submitRating(
             props.result.book_id,
+            props.result.user_id,
             e.target[0].value,
             e.target[1].value
           );
@@ -66,7 +71,11 @@ export default function Book(props) {
           <h2>On page {props.result.page_number}</h2>
           <button onClick={updateStatus}>Complete</button>{' '}
           <button onClick={updatePageNum}>Update Page Number</button>{' '}
-          <button onClick={() => props.removeBook(props.result.book_id)}>
+          <button
+            onClick={() =>
+              props.removeBook(props.result.book_id, props.result.user_id)
+            }
+          >
             Remove
           </button>
           {complete ? displayReview() : ''}
@@ -77,10 +86,18 @@ export default function Book(props) {
       )}
       {props.result.status === 'to be read' ? (
         <div>
-          <button onClick={() => props.updateStatus(props.result.book_id)}>
+          <button
+            onClick={() =>
+              props.updateStatus(props.result.book_id, props.result.user_id)
+            }
+          >
             Mark as Reading
           </button>{' '}
-          <button onClick={() => props.removeBook(props.result.book_id)}>
+          <button
+            onClick={() =>
+              props.removeBook(props.result.book_id, props.result.user_id)
+            }
+          >
             Remove
           </button>
         </div>

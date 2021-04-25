@@ -1,3 +1,4 @@
+const { library } = require('webpack');
 const db = require('../models/libraryModel');
 
 const libraryController = {};
@@ -8,7 +9,7 @@ const libraryController = {};
 
 libraryController.getToBeRead = (req, res, next) => {
   const querySelector = `
-  SELECT book_list.book_id, book_list.status, books.title, books.author, books.page_count, books.cover_url, books.isbn 
+  SELECT book_list.book_id, book_list.user_id, book_list.status, books.title, books.author, books.page_count, books.cover_url, books.isbn 
   FROM "book_list" INNER JOIN "books" ON book_list.book_id = books._id 
   WHERE status = 'to be read' AND book_list.user_id = $1`;
   const userID = ['1']; // needs updated to reflect real user id
@@ -16,7 +17,6 @@ libraryController.getToBeRead = (req, res, next) => {
   tbrResults
     .then((data) => {
       res.locals.toberead = data;
-      // decide how results are being returned to front end?
       next();
     })
     .catch((err) => {
@@ -33,27 +33,27 @@ libraryController.getToBeRead = (req, res, next) => {
 
 libraryController.getCurrentlyReading = (req, res, next) => {
   const querySelector = `
-  SELECT book_list.book_id, book_list.status, books.title, books.author, books.page_count, books.cover_url, books.isbn, book_list.page_number 
+  SELECT book_list.book_id, book_list.status, book_list.user_id, books.title, books.author, books.page_count, books.cover_url, books.isbn, book_list.page_number 
   FROM "book_list" INNER JOIN "books" ON book_list.book_id = books._id 
   WHERE status = 'in progress' AND book_list.user_id = $1`;
   const userID = ['1']; // needs updated to reflect real user id
 
   const currentResults = db.query(querySelector, userID);
-  currentResults.then((data) => {
-    res.locals.current = data;
-    // decide how results are being returned to front end?
-    next();
-  });
-  // .catch((err) => {
-  //   return next({
-  //     log:
-  //       'libraryController.getCurrentlyReading: ERROR: Error getting list from database',
-  //     message: {
-  //       err:
-  //         'Error occurred in libraryController.getCurrentlyReading. Check server logs for more details',
-  //     },
-  //   });
-  // });
+  currentResults
+    .then((data) => {
+      res.locals.current = data;
+      next();
+    })
+    .catch((err) => {
+      return next({
+        log:
+          'libraryController.getCurrentlyReading: ERROR: Error getting list from database',
+        message: {
+          err:
+            'Error occurred in libraryController.getCurrentlyReading. Check server logs for more details',
+        },
+      });
+    });
 };
 
 libraryController.getCompleted = (req, res, next) => {
@@ -69,7 +69,6 @@ libraryController.getCompleted = (req, res, next) => {
   completedResults
     .then((data) => {
       res.locals.complete = data;
-      // decide how results are being returned to front end?
       next();
     })
     .catch((err) => {
@@ -92,7 +91,8 @@ libraryController.getRatings = (req, res, next) => {
   WHERE review_list.user_id = $1`;
   const userID = ['1'];
 
-  const ratingsResults = db.query(querySelector, userID).then((data) => {
+  const ratingsResults = db.query(querySelector, userID);
+  ratingsResults.then((data) => {
     res.locals.ratings = data;
     next();
   });
@@ -103,8 +103,8 @@ libraryController.addToTBR = (req, res, next) => {
   // query Vars: BookID, UserID
   const queryVars = ['1'];
 
-  const addedResults = db
-    .query(querySelector, queryVars)
+  const addedResults = db.query(querySelector, queryVars);
+  addedResults
     .then((data) => {
       console.log(data.rows);
       next();
@@ -123,15 +123,60 @@ libraryController.addToTBR = (req, res, next) => {
 // update Status
 libraryController.updateStatus = (req, res, next) => {
   // bood ID, user ID, status update
+  const querySelector = `UPDATE book_list
+  SET status = 'in progress'
+  WHERE book_id = $1 AND user_id = $2`;
+  const queryVars = [req.body.bookID, req.body.userID];
+
+  const updateResults = db.query(querySelector, queryVars);
+  updateResults.then(next());
 };
 
 // add Review or Stars
-libraryController.addRating = (req, res, next) => {
-  // book ID, user ID, stars
+libraryController.submitRating = (req, res, next) => {
+  // book ID, user ID, stars, review
+  console.log(req.body.book_id);
+  const querySelectorInsert = `INSERT INTO review_list (book_id, user_id, stars, review)
+  VALUES ($1, $2, $3, $4)`;
+  const queryVarsInsert = [
+    req.body.bookID,
+    req.body.userID,
+    req.body.stars,
+    req.body.review,
+  ];
+
+  const querySelectorUpdate = `UPDATE book_list 
+  SET status = 'completed'
+  WHERE book_id = $1 AND user_id = $2`;
+  const queryVarsUpdate = [req.body.bookID, req.body.userID];
+
+  const updateRecords = db.query(querySelectorInsert, queryVarsInsert);
+  updateRecords
+    .then(() => {
+      db.query(querySelectorUpdate, queryVarsUpdate)
+        .then(next())
+        .catch((err) => console.log(err));
+    })
+    .catch((err) => console.log(err));
 };
 
-libraryController.addReview = (req, res, next) => {
-  // book ID, user ID, review
+libraryController.updatePageNum = (req, res, next) => {
+  const querySelector = `UPDATE book_list
+  SET page_number = $1
+  WHERE book_id = $2 AND user_id = $3`;
+  const queryVars = [req.body.newPageNum, req.body.bookID, req.body.userID];
+
+  const pageNumResults = db.query(querySelector, queryVars);
+  pageNumResults.then(next());
+};
+
+libraryController.removeBook = (req, res, next) => {
+  const querySelector = `DELETE FROM book_list
+  WHERE book_id = $1 and user_id = $2`;
+  const queryVars = [req.body.bookID, req.body.userID];
+
+  const removeResults = db.query(querySelector, queryVars);
+  removeResults.then(next());
 };
 
 module.exports = libraryController;

@@ -39,17 +39,19 @@ export default class MyBooks extends React.Component {
     }
     return books;
   }
-  submitRating(bookID, stars, review) {
-    console.log(bookID);
-    console.log(stars);
-    console.log(review);
+  submitRating(bookID, userID, stars, review) {
+    const body = { bookID, userID, stars, review };
+    axios.post('/db/submitRating', body).then((res) => console.log(res));
   }
-  updatePageNum(bookID, newPageNum) {
-    console.log(bookID);
-    console.log(newPageNum);
+  updatePageNum(bookID, userID, newPageNum) {
+    const body = { bookID, userID, newPageNum };
+    axios.post('/db/updatePageNum', body).then((data) => console.log(data));
   }
-  removeBook(bookID, status) {
-    console.log(bookID);
+  removeBook(bookID, userID) {
+    const body = { bookID, userID };
+    axios
+      .delete('/db/removeBook', { data: body })
+      .then((data) => console.log(data));
   }
   componentDidMount() {
     axios.get('/db/current').then((data) => {

@@ -25,11 +25,15 @@ export default class ToBeRead extends React.Component {
     }
     return books;
   }
-  updateStatus(bookID) {
-    console.log(bookID);
+  updateStatus(bookID, userID) {
+    const body = { bookID, userID };
+    axios.post('/db/updateStatus', body).then((data) => console.log(data));
   }
-  removeBook(bookID) {
-    console.log(bookID);
+  removeBook(bookID, userID) {
+    const body = { bookID, userID };
+    axios
+      .delete('/db/removeBook', { data: body })
+      .then((data) => console.log(data));
   }
   componentDidMount() {
     axios

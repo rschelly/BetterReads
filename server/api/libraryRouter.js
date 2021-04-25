@@ -1,4 +1,5 @@
 const express = require('express');
+const { library } = require('webpack');
 const libraryRouter = express.Router();
 const libraryController = require('../controllers/libraryController.js');
 
@@ -24,19 +25,31 @@ libraryRouter.get('/ratings', libraryController.getRatings, (req, res) => {
 });
 
 libraryRouter.post(
-  '/updatestatus',
+  '/updateStatus',
   libraryController.updateStatus,
   (req, res) => {
     res.status(200).json();
   }
 );
 
-libraryRouter.post('/addRating', libraryController.addRating, (req, res) => {
-  res.status(200).json();
-});
+libraryRouter.post(
+  '/submitRating',
+  libraryController.submitRating,
+  (req, res) => {
+    res.status(200);
+  }
+);
 
-libraryRouter.post('/addReview', libraryController.addReview, (req, res) => {
-  res.status(200).json();
-});
+libraryRouter.post(
+  '/updatePageNum',
+  libraryController.updatePageNum,
+  (req, res) => {
+    res.status(200);
+  }
+);
+
+libraryRouter.delete('/removeBook', libraryController.removeBook, (req, res) =>
+  res.status(200)
+);
 
 module.exports = libraryRouter;
