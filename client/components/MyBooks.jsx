@@ -8,6 +8,9 @@ export default class MyBooks extends React.Component {
     this.state = {
       books: [],
     };
+    this.submitRating = this.submitRating.bind(this);
+    this.updatePageNum = this.updatePageNum.bind(this);
+    this.removeBook = this.removeBook.bind(this);
   }
   // fetch /db/current
   // [
@@ -24,13 +27,34 @@ export default class MyBooks extends React.Component {
   renderBooks() {
     const books = [];
     for (let i = 0; i < this.state.books.length; i += 1) {
-      books.push(<Book result={this.state.books[i]} />);
+      books.push(
+        <Book
+          result={this.state.books[i]}
+          submitRating={this.submitRating}
+          updatePageNum={this.updatePageNum}
+          removeBook={this.removeBook}
+          key={this.state.books[i].book_id}
+        />
+      );
     }
     return books;
   }
+  submitRating(bookID, userID, stars, review) {
+    const body = { bookID, userID, stars, review };
+    axios.post('/db/submitRating', body).then((res) => console.log(res));
+  }
+  updatePageNum(bookID, userID, newPageNum) {
+    const body = { bookID, userID, newPageNum };
+    axios.post('/db/updatePageNum', body).then((data) => console.log(data));
+  }
+  removeBook(bookID, userID) {
+    const body = { bookID, userID };
+    axios
+      .delete('/db/removeBook', { data: body })
+      .then((data) => console.log(data));
+  }
   componentDidMount() {
     axios.get('/db/current').then((data) => {
-      console.log(data.data.rows);
       this.setState({ books: data.data.rows });
     });
   }

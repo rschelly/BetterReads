@@ -8,13 +8,32 @@ export default class ToBeRead extends React.Component {
     this.state = {
       books: [],
     };
+    this.removeBook = this.removeBook.bind(this);
+    this.updateStatus = this.updateStatus.bind(this);
   }
   renderBooks() {
     const books = [];
     for (let i = 0; i < this.state.books.length; i += 1) {
-      books.push(<Book result={this.state.books[i]} />);
+      books.push(
+        <Book
+          result={this.state.books[i]}
+          removeBook={this.removeBook}
+          updateStatus={this.updateStatus}
+          key={this.state.books[i].book_id}
+        />
+      );
     }
     return books;
+  }
+  updateStatus(bookID, userID) {
+    const body = { bookID, userID };
+    axios.post('/db/updateStatus', body).then((data) => console.log(data));
+  }
+  removeBook(bookID, userID) {
+    const body = { bookID, userID };
+    axios
+      .delete('/db/removeBook', { data: body })
+      .then((data) => console.log(data));
   }
   componentDidMount() {
     axios
