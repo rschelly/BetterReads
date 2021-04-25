@@ -19,6 +19,10 @@ libraryRouter.get('/completed', libraryController.getCompleted, (req, res) => {
   res.status(200).json(res.locals.complete);
 });
 
+libraryRouter.get('/ratings', libraryController.getRatings, (req, res) => {
+  res.status(200).json(res.locals.ratings);
+});
+
 libraryRouter.post(
   '/updatestatus',
   libraryController.updateStatus,

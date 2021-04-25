@@ -12,7 +12,12 @@ export default class extends React.Component {
   renderRatings() {
     const reviews = [];
     for (let i = 0; i < this.state.ratings.length; i += 1) {
-      reviews.push(<Review result={this.state.ratings[i]} />);
+      reviews.push(
+        <Review
+          result={this.state.ratings[i]}
+          key={this.state.ratings[i].book_id}
+        />
+      );
     }
     return reviews;
   }

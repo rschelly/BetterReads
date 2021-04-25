@@ -12,7 +12,9 @@ export default class Complete extends React.Component {
   renderBooks() {
     const books = [];
     for (let i = 0; i < this.state.books.length; i += 1) {
-      books.push(<Book result={this.state.books[i]} />);
+      books.push(
+        <Book result={this.state.books[i]} key={this.state.books[i].book_id} />
+      );
     }
     return books;
   }
