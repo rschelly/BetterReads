@@ -2,6 +2,8 @@ import React from 'react';
 import Book from './Book.jsx';
 import axios from 'axios';
 
+// Displays books that are currently in database as "In Progress"
+
 export default class MyBooks extends React.Component {
   constructor(props) {
     super(props);
@@ -12,18 +14,14 @@ export default class MyBooks extends React.Component {
     this.updatePageNum = this.updatePageNum.bind(this);
     this.removeBook = this.removeBook.bind(this);
   }
-  // fetch /db/current
-  // [
-  //   {
-  //     book_id: 1,
-  //     status: 'in progress',
-  //     title: 'test title',
-  //     author: 'author',
-  //     page_count: 20,
-  //     cover_url: 'cover_url',
-  //     isbn: 12345
-  //   }
-  // ]
+  // initial fetch request to database
+  componentDidMount() {
+    axios.get('/db/current').then((data) => {
+      this.setState({ books: data.data.rows });
+    });
+  }
+
+  // function that runs once books have been succesfully fetched
   renderBooks() {
     const books = [];
     for (let i = 0; i < this.state.books.length; i += 1) {
@@ -39,24 +37,25 @@ export default class MyBooks extends React.Component {
     }
     return books;
   }
+
+  // event handler for book being marked complete and sending rating to database
   submitRating(bookID, userID, stars, review) {
     const body = { bookID, userID, stars, review };
     axios.post('/db/submitRating', body).then((res) => console.log(res));
   }
+
+  // event handler for page number to be updated and sent to database
   updatePageNum(bookID, userID, newPageNum) {
     const body = { bookID, userID, newPageNum };
     axios.post('/db/updatePageNum', body).then((data) => console.log(data));
   }
+
+  // event handler to remove book from list and send to database
   removeBook(bookID, userID) {
     const body = { bookID, userID };
     axios
       .delete('/db/removeBook', { data: body })
       .then((data) => console.log(data));
-  }
-  componentDidMount() {
-    axios.get('/db/current').then((data) => {
-      this.setState({ books: data.data.rows });
-    });
   }
   render() {
     return (

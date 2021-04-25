@@ -2,6 +2,10 @@ import axios from 'axios';
 import React from 'react';
 import Review from './Review.jsx';
 
+// Displays Reviews/Ratings from Review_list in database
+// Ratings/reviews used interchangeably. Initial plan was to handle stars and comments separately, but
+// ultimately they got merged together. Sorry for the poor naming convention, will refactor if there's time
+
 export default class extends React.Component {
   constructor(props) {
     super(props);
@@ -9,6 +13,15 @@ export default class extends React.Component {
       ratings: [],
     };
   }
+
+  // initial fetch from db for ratings/reviews
+  componentDidMount() {
+    axios
+      .get('/db/ratings')
+      .then((data) => this.setState({ ratings: data.data.rows }));
+  }
+
+  // function that runs once ratings/reviews have populated
   renderRatings() {
     const reviews = [];
     for (let i = 0; i < this.state.ratings.length; i += 1) {
@@ -20,11 +33,6 @@ export default class extends React.Component {
       );
     }
     return reviews;
-  }
-  componentDidMount() {
-    axios
-      .get('/db/ratings')
-      .then((data) => this.setState({ ratings: data.data.rows }));
   }
   render() {
     return (
