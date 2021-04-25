@@ -1,5 +1,6 @@
 import React from 'react';
 
+// Display only component
 export default function Review(props) {
   return (
     <div className='review'>

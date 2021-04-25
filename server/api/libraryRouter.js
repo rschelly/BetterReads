@@ -1,13 +1,13 @@
 const express = require('express');
-const { library } = require('webpack');
 const libraryRouter = express.Router();
 const libraryController = require('../controllers/libraryController.js');
 
-// name something different? idk
+// Router for To Be Read books
 libraryRouter.get('/tbr', libraryController.getToBeRead, (req, res) => {
   res.status(200).json(res.locals.toberead);
 });
 
+// Router for books currently in progress
 libraryRouter.get(
   '/current',
   libraryController.getCurrentlyReading,
@@ -16,14 +16,17 @@ libraryRouter.get(
   }
 );
 
+// Router for books Completed
 libraryRouter.get('/completed', libraryController.getCompleted, (req, res) => {
   res.status(200).json(res.locals.complete);
 });
 
+// Router to populate Ratings/Reviews page
 libraryRouter.get('/ratings', libraryController.getRatings, (req, res) => {
   res.status(200).json(res.locals.ratings);
 });
 
+// Router to update book from TBR to In Progress
 libraryRouter.post(
   '/updateStatus',
   libraryController.updateStatus,
@@ -32,6 +35,7 @@ libraryRouter.post(
   }
 );
 
+// Router to mark book as complete and submit the star rating and review
 libraryRouter.post(
   '/submitRating',
   libraryController.submitRating,
@@ -40,6 +44,7 @@ libraryRouter.post(
   }
 );
 
+// Router to update page number for In Progress books
 libraryRouter.post(
   '/updatePageNum',
   libraryController.updatePageNum,
@@ -48,6 +53,7 @@ libraryRouter.post(
   }
 );
 
+// Router to remove book from either TBR or Current books
 libraryRouter.delete('/removeBook', libraryController.removeBook, (req, res) =>
   res.status(200)
 );

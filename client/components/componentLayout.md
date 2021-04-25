@@ -1,9 +1,9 @@
 - App
   - Home
     - Header
-    - NavBar
+    - NavBar:
       - Profile
-      - Main (Home)
+      - Main (Home - this is what displays by default)
       - MyBooks
         - Book
       - To Be Read
