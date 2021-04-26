@@ -8,6 +8,8 @@ import Search from "./Search.jsx";
 import Main from "./Main.jsx";
 import ToBeRead from "./ToBeRead.jsx";
 
+// Displays the profile element and links to other components
+// Main is what will display upon initial render
 export default function NavBar() {
   return (
     <Router>

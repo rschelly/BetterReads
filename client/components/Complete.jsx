@@ -2,6 +2,8 @@ import React from 'react';
 import Book from './Book.jsx';
 import axios from 'axios';
 
+// Displays books marked as "Completed" in database
+
 export default class Complete extends React.Component {
   constructor(props) {
     super(props);
@@ -9,27 +11,21 @@ export default class Complete extends React.Component {
       books: [],
     };
   }
+  // initial fetch req to pull books from db
+  componentDidMount() {
+    axios
+      .get('/db/completed')
+      .then((data) => this.setState({ books: data.data.rows }));
+  }
+  // function that runs once books have loaded
   renderBooks() {
     const books = [];
     for (let i = 0; i < this.state.books.length; i += 1) {
-      books.push(<Book result={this.state.books[i]} />);
+      books.push(
+        <Book result={this.state.books[i]} key={this.state.books[i].book_id} />
+      );
     }
     return books;
-  }
-  // fetch db/completed
-  // [
-  //   {
-  //     book_id: 3,
-  //     status: 'completed',
-  //     title: 'third title',
-  //     author: 'third author',
-  //     page_count: 45,
-  //     cover_url: 'cover_url',
-  //     isbn: 87654
-  //   }
-  // ]
-  componentDidMount() {
-    axios.get('/db/completed').then((data) => this.setState({ books: data }));
   }
   render() {
     return (
