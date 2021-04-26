@@ -2,9 +2,24 @@
 
 This  project is designed to create an application that will allow users easy access to a  personal library of books of their choice. It will contain sections for books a user has yet to read, books they are currently reading, and books they have finished. There will also be a profile page and a search page. 
 
+
+Link to Scratch Project Brief: https://docs.google.com/document/d/15telzd4SDhsxvyHEwnYUFwexR_krPoOo9mw4fx1i3so/edit
+
+What was the original vision for the project: A site to keep track of books you're currently reading, want to read, and have completed. There should be a login page, and your account will hold all of your book information.
+
+
+If the project has strayed from the original vision, why? N/A
+
+How far has the project progressed?  
+
+What are some current issues/roadblocks? Authenticatoin is not working yet
+
+What are some suggestions for iterating on this project? 
+
+
 To Be Started - 
 ### Create an Account
- -  [ ] Front End:
+ -  ✅ Front End:
     - Section on log in page to create an account with input boxes
  - [ ] Back End: 
     - Store username and passwords in database. Bcrypt? Or plain text? 
