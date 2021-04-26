@@ -34,15 +34,25 @@ userController.createUser = (req, res, next) => {
     password: req.body.password,
   }))
   //then take the cookie object id and turn it into a number. Basically change the ugly ssid number into something legible.
-  .then((response) => {
-    console.log("inside create user");
-    console.log(`this is res.locals: ${res.locals}`)
-      res.locals.username = req.body.username;
-      res.locals.id = response._doc._id.toHexString();
-      return next();
-    })
+  // .then((response) => {
+  //   console.log("inside create user");
+  //   console.log(`this is res.locals: ${res.locals}`)
+  //     res.locals.username = req.body.username;
+  //     res.locals.id = response._doc._id.toHexString();
+  //     return next();
+  //   })
+  //   //if an erorr occurs, redirect back to the sign up page
+  //   .catch(() => res.send("error in create user"));
+  // },
+  ((err, newUser) => {
     //if an erorr occurs, redirect back to the sign up page
-    .catch(() => res.send("error in create user"));
+    if(err) res.redirect('/signup');
+    //then take the cookie object id and turn it into a number. Basically change the ugly ssid number into something legible.
+    res.locals.username = req.body.username;
+    res.locals.id = response._doc._id.toHexString();
+    return next();
+  })
+    .catch(() => res.render('./../client/html-scss/signup)'));
 };
 
 // needs to go after create user //

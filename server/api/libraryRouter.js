@@ -4,19 +4,19 @@ const libraryController = require('../controllers/libraryController.js');
 
 // name something different? idk
 libraryRouter.get('/tbr', libraryController.getToBeRead, (req, res) => {
-  res.status(200).json();
+  res.status(200).json(res.locals.toberead);
 });
 
 libraryRouter.get(
   '/current',
   libraryController.getCurrentlyReading,
   (req, res) => {
-    res.status(200).json();
+    res.status(200).json(res.locals.current);
   }
 );
 
 libraryRouter.get('/completed', libraryController.getCompleted, (req, res) => {
-  res.status(200).json();
+  res.status(200).json(res.locals.complete);
 });
 
 libraryRouter.post(

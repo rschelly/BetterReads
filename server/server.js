@@ -1,52 +1,59 @@
 const express = require('express');
 const path = require('path');
+const mongoose = require('mongoose');
 // const cookieParser = require('cookie-parser');
-const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 
-const userController = require("./controllers/userController");
-const cookieController = require("./controllers/cookieController");
-const sessionController = require("./controllers/sessionController");
-//note from kerri - commented out session controller temp due to node errors
+const userController = require('./controllers/userController');
+// const cookieController = require("./controllers/cookieController");
+// const sessionController = require("./controllers/sessionController");
+// note from kerri - commented out session controller temp due to node errors
 
 const app = express();
 const PORT = 3000;
 
-const mongoURI = "mongodb+srv://rschelly:mongopassword@cluster0.b5qc7.mongodb.net/betterreads?retryWrites=true&w=majority"
+const mongoURI =
+  'mongodb+srv://rschelly:mongopassword@cluster0.b5qc7.mongodb.net/betterreads?retryWrites=true&w=majority';
 mongoose.connect(mongoURI);
-const  { connection } = mongoose
+const { connection } = mongoose;
 
-connection.once("open", () => {
-  console.log('connected to mongoose using once')
-})
-
+connection.once('open', () => {
+  console.log('connected to mongoose using once');
+});
 
 const apiRouter = require('./api/api_router.js');
 const libraryRouter = require('./api/libraryRouter.js');
 
 app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 
-
-app.get("/", (req, res) => {
-  res.redirect('/login');
-})
+app.get('/', (req, res) => {
+  res.redirect('/home');
+});
 // note from kerri - commented out cookieController.setCookie temp due to node errors
 
 //paths for static files
 app.get('/login', (req, res) => {
-  res.sendFile(path.join(__dirname, '../html-scss/login.html'))
+  res.sendFile(path.join(__dirname, '../html-scss/login.html'));
+});
+
+app.post('/signup', userController.createUser, (req, res) => {
+  res.redirect('/home');
+});
+
+app.post('/login', userController.verifyUser, (req, res) => {
+  res.redirect('home');
 });
 
 app.get('/signup', (req, res) => {
-  res.sendFile(path.join(__dirname, '../html-scss/signup.html'))
+  res.sendFile(path.join(__dirname, '../html-scss/signup.html'));
 });
 
 app.get('/home', (req, res) => {
-  res.sendFile(path.join(__dirname, '../html-scss/index.html'))
+  res.sendFile(path.join(__dirname, '../html-scss/index.html'));
 });
 
-// app.use('/api', apiRouter)
+app.get('/api', apiRouter);
 app.use('/db', libraryRouter);
 
 // catch all for requests to unknown route

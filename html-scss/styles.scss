@@ -1,0 +1,86 @@
+$mainColor: rgb(116, 20, 20, .95);
+$secondaryColor: rgb(224, 223, 223);
+
+
+body {
+  margin: .1px;
+}
+
+header {
+  text-align: center;
+  border: 1px solid $mainColor;
+  grid-column: 1 / span 2;
+  background-color: $mainColor;
+  color: $secondaryColor;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  box-shadow: 1px 1px 1px black;
+}
+
+main {
+  border: 1px solid red;
+  display: grid;
+  grid-template-columns: 35% 65%;
+  height: 870px;
+  background-image: url(https://i.ytimg.com/vi/YQc4WT0yDH4/maxresdefault.jpg);
+  border-radius: 5px;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+// everything in the nav bar
+nav {
+  grid-column: 1 / span 1;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  width: 200px;
+  background-color: $secondaryColor;
+  border-radius: 5px;
+  position: absolute;
+  margin-top: 150px;
+  box-shadow: 1px 1px 1px rgb(0, 0, 0);
+
+  #profileLink {
+    height: 270px;
+    border: 1px solid $mainColor;
+    color: $mainColor;
+  }
+  .navLinks {
+    background-color: $mainColor;
+    border: 1px solid rgb(44, 1, 9);
+    height: 40px;
+    font-size: 1.3em;
+    text-align: center;
+    padding-top: 15px;
+    color: $secondaryColor;
+  }
+  .navLinks:hover{
+    animation: change-color 2s ease-out ;
+    background-color: rgb(44, 1, 9);
+    color: $secondaryColor;
+    animation: change-background 2s ease infinite;
+  }
+
+  a {
+    color: inherit;
+  } 
+  a:hover {
+    color:$secondaryColor;
+  }
+  a:link{
+    text-decoration: none;
+  }
+ 
+
+  @keyframes change-background {
+    0% {
+      background: $mainColor;
+    }
+    100% {
+      background: rgba(78, 12, 12, 0.95);
+    }
+  }
+}

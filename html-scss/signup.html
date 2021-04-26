@@ -2,17 +2,16 @@
  <!DOCTYPE html>
  <html lang="en">
    <head>
+    <link rel="stylesheet" href="/styles.scss" />
      <title>Better Reads</title>
    </head>
    <body>
        <style>
            body {
-               /* background-color: cornflowerblue; */
                background-image: url(https://i.ytimg.com/vi/YQc4WT0yDH4/maxresdefault.jpg); 
                height: 100%;
                width: clamp(200px, 100%, 1280px);
                background-size: cover;
-               /* background-repeat: no-repeat; */
            }
            #signInBox  {
                height: 240px;
@@ -58,7 +57,6 @@
                  
              }
              #wunderpuss {
-             /* background-color: aqua; */
              position: absolute;
              left: 83%;
              top: 0%;  
@@ -100,7 +98,7 @@
                  <input class="input" name="username" type="text" placeholder="username" autocomplete="off"></input><br/>
                  <input class="input"name="password" type="text" placeholder="password" autocomplete="off"></input><br/>
                  <input  id="button" type='submit' value='login'/>
-                 <a id="signInLink" href="/home">Homepage</a>
+                 <!-- <a id="signInLink" href="/home">Homepage</a> -->
              </div>
              <img id="logo" src="assets/BR_Logo_White.png" height="150px" width="150px"/>
          </form>
