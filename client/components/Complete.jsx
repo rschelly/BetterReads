@@ -1,37 +1,29 @@
-import React from 'react';
-import Book from './Book.jsx';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import Book from "./Book.jsx";
+import axios from "axios";
 
 // Displays books marked as "Completed" in database
 
-export default class Complete extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      books: [],
-    };
-  }
-  // initial fetch req to pull books from db
-  componentDidMount() {
-    axios
-      .get('/db/completed')
-      .then((data) => this.setState({ books: data.data.rows }));
-  }
-  // function that runs once books have loaded
-  renderBooks() {
-    const books = [];
-    for (let i = 0; i < this.state.books.length; i += 1) {
-      books.push(
-        <Book result={this.state.books[i]} key={this.state.books[i].book_id} />
-      );
+export default function Complete() {
+  const [books, setBooks] = useState([]);
+
+  // Initial fetch to db
+  useEffect(() => {
+    axios.get("/db/completed").then((data) => setBooks(data.data.rows));
+  }, []);
+
+  // Once fetch is complete, renderBooks runs and returns array of books
+  const renderBooks = () => {
+    const newBooks = [];
+    for (let i = 0; i < books.length; i += 1) {
+      newBooks.push(<Book result={books[i]} key={books[i].book_id}/>);
     }
-    return books;
-  }
-  render() {
-    return (
-      <div>
-        {this.state.books.length > 0 ? this.renderBooks() : <h2>Loading...</h2>}
-      </div>
-    );
-  }
+    return newBooks;
+  };
+
+  return (
+    <div className="bodyDiv">
+      {books.length > 0 ? renderBooks() : <h2>Loading...</h2>}
+    </div>
+  );
 }

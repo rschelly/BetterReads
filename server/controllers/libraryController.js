@@ -1,4 +1,4 @@
-const db = require('../models/libraryModel');
+const db = require("../models/libraryModel");
 
 const libraryController = {};
 
@@ -16,7 +16,7 @@ libraryController.getToBeRead = (req, res, next) => {
   SELECT book_list.book_id, book_list.user_id, book_list.status, books.title, books.author, books.page_count, books.cover_url, books.isbn 
   FROM "book_list" INNER JOIN "books" ON book_list.book_id = books._id 
   WHERE status = 'to be read' AND book_list.user_id = $1`;
-  const userID = ['1']; // TO DO!!!!! needs updated to reflect real user id
+  const userID = ["1"]; // TO DO!!!!! needs updated to reflect real user id
   const tbrResults = db.query(querySelector, userID);
   tbrResults
     .then((data) => {
@@ -26,10 +26,10 @@ libraryController.getToBeRead = (req, res, next) => {
     .catch((err) => {
       return next({
         log:
-          'libraryController.getToBeRead: ERROR: Error getting list from database',
+          "libraryController.getToBeRead: ERROR: Error getting list from database",
         message: {
           err:
-            'Error occurred in libraryController.getToBeRead. Check server logs for more details',
+            "Error occurred in libraryController.getToBeRead. Check server logs for more details",
         },
       });
     });
@@ -42,7 +42,7 @@ libraryController.getCurrentlyReading = (req, res, next) => {
   SELECT book_list.book_id, book_list.status, book_list.user_id, books.title, books.author, books.page_count, books.cover_url, books.isbn, book_list.page_number 
   FROM "book_list" INNER JOIN "books" ON book_list.book_id = books._id 
   WHERE status = 'in progress' AND book_list.user_id = $1`;
-  const userID = ['1']; // needs updated to reflect real user id
+  const userID = ["1"]; // needs updated to reflect real user id
 
   const currentResults = db.query(querySelector, userID);
   currentResults
@@ -53,10 +53,10 @@ libraryController.getCurrentlyReading = (req, res, next) => {
     .catch((err) => {
       return next({
         log:
-          'libraryController.getCurrentlyReading: ERROR: Error getting list from database',
+          "libraryController.getCurrentlyReading: ERROR: Error getting list from database",
         message: {
           err:
-            'Error occurred in libraryController.getCurrentlyReading. Check server logs for more details',
+            "Error occurred in libraryController.getCurrentlyReading. Check server logs for more details",
         },
       });
     });
@@ -71,7 +71,7 @@ libraryController.getCompleted = (req, res, next) => {
   INNER JOIN "books" 
   ON book_list.book_id = books._id 
   WHERE status = 'completed' AND book_list.user_id = $1`;
-  const userID = ['1']; // needs updated to reflect real user id
+  const userID = ["1"]; // needs updated to reflect real user id
 
   const completedResults = db.query(querySelector, userID);
   completedResults
@@ -82,10 +82,10 @@ libraryController.getCompleted = (req, res, next) => {
     .catch((err) => {
       return next({
         log:
-          'libraryController.getCompleted: ERROR: Error getting list from database',
+          "libraryController.getCompleted: ERROR: Error getting list from database",
         message: {
           err:
-            'Error occurred in libraryController.getCompleted. Check server logs for more details',
+            "Error occurred in libraryController.getCompleted. Check server logs for more details",
         },
       });
     });
@@ -93,27 +93,27 @@ libraryController.getCompleted = (req, res, next) => {
 
 // Takes in user id. Queries DB for that user and returns all reviews/ratings from review_list
 // Stores data in res.locals
-libraryController.getRatings = (req, res, next) => {
+libraryController.getReviews = (req, res, next) => {
   const querySelector = `SELECT *
   FROM "review_list"
   INNER JOIN "books"
   ON review_list.book_id = books._id 
   WHERE review_list.user_id = $1`;
-  const userID = ['1'];
+  const userID = ["1"];
 
-  const ratingsResults = db.query(querySelector, userID);
-  ratingsResults
+  const reviewResults = db.query(querySelector, userID);
+  reviewResults
     .then((data) => {
-      res.locals.ratings = data;
+      res.locals.reviews = data;
       next();
     })
     .catch((err) => {
       return next({
         log:
-          'libraryController.getRatings: ERROR: Error getting list from database',
+          "libraryController.getRatings: ERROR: Error getting list from database",
         message: {
           err:
-            'Error occurred in libraryController.getRatings. Check server logs for more details',
+            "Error occurred in libraryController.getRatings. Check server logs for more details",
         },
       });
     });
@@ -133,10 +133,10 @@ libraryController.updateStatus = (req, res, next) => {
   updateResults.then(next()).catch((err) => {
     return next({
       log:
-        'libraryController.updateStatus: ERROR: Error updating record in database',
+        "libraryController.updateStatus: ERROR: Error updating record in database",
       message: {
         err:
-          'Error occurred in libraryController.updateStatus. Check server logs for more details',
+          "Error occurred in libraryController.updateStatus. Check server logs for more details",
       },
     });
   });
@@ -176,10 +176,10 @@ libraryController.submitRating = (req, res, next) => {
         .catch((err) => {
           return next({
             log:
-              'libraryController.submitRating: ERROR: Error updating record in database',
+              "libraryController.submitRating: ERROR: Error updating record in database",
             message: {
               err:
-                'Error occurred in libraryController.submitRating. Check server logs for more details',
+                "Error occurred in libraryController.submitRating. Check server logs for more details",
             },
           });
         });
@@ -187,10 +187,10 @@ libraryController.submitRating = (req, res, next) => {
     .catch((err) => {
       return next({
         log:
-          'libraryController.submitRating: ERROR: Error updating record in database',
+          "libraryController.submitRating: ERROR: Error updating record in database",
         message: {
           err:
-            'Error occurred in libraryController.submitRating. Check server logs for more details',
+            "Error occurred in libraryController.submitRating. Check server logs for more details",
         },
       });
     });
@@ -215,10 +215,10 @@ libraryController.updatePageNum = (req, res, next) => {
   pageNumResults.then(next()).catch((err) => {
     return next({
       log:
-        'libraryController.updatePageNum: ERROR: Error updating record in database',
+        "libraryController.updatePageNum: ERROR: Error updating record in database",
       message: {
         err:
-          'Error occurred in libraryController.updatePageNum. Check server logs for more details',
+          "Error occurred in libraryController.updatePageNum. Check server logs for more details",
       },
     });
   });
@@ -241,26 +241,59 @@ libraryController.removeBook = (req, res, next) => {
   removeResults.then(next());
 };
 
-
 // ***UNFINISHED! Need to link up with API Calls.***
 // Will also potentially need to create add book to DB ? idk
 libraryController.addToTBR = (req, res, next) => {
-  const querySelector = `INSERT INTO book_list (book_id, user_id, status, page_number) VALUES ($1, $2, 'to be read', 0)`;
-  // query Vars: BookID, UserID
-  const queryVars = ['1'];
+  console.log(req.body);
+  const querySelectorBookAdd = `
+  INSERT INTO books (title, author, page_count, cover_url, isbn) 
+  VALUES ($1, $2, $3, $4, $5) 
+  RETURNING _id
+  `;
+  const queryVars = [
+    req.body.title,
+    req.body.author,
+    req.body.pageCount,
+    req.body.url,
+    req.body.ISBN,
+  ];
 
-  const addedResults = db.query(querySelector, queryVars);
+
+  const addedResults = db.query(querySelectorBookAdd, queryVars);
   addedResults
     .then((data) => {
-      console.log(data.rows);
-      next();
+      console.log(data);
+      const addTBRqueryString = `
+      INSERT INTO book_list (book_id, user_id, status, page_number) 
+      VALUES ($1, $2, $3, $4)
+      `;
+      const TBRqueryVars = [
+        data.rows[0]._id,
+        1,
+        'to be read',
+        0
+      ]
+      db.query(addTBRqueryString, TBRqueryVars)
+        .then((data) => {
+          console.log(data);
+          next();
+        })
+        .catch((err) => {
+          return next({
+            log: "libraryController.addToTBR: ERROR:" + err.message,
+            message: {
+              err: 
+                "Error occurred in libraryController.addToTBR. Check server logs for more details"
+            }
+          })
+        })
     })
     .catch((err) => {
       return next({
-        log: 'libraryController.addToTBR: ERROR: Error adding to database',
+        log: "libraryController.addToTBR: ERROR: Error adding to books",
         message: {
           err:
-            'Error occurred in libraryController.addToTBR. Check server logs for more details',
+            "Error occurred in libraryController.addToTBR. Check server logs for more details",
         },
       });
     });

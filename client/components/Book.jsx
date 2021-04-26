@@ -1,18 +1,21 @@
-import React from 'react';
-import { useState } from 'react';
+import React from "react";
+import { useState } from "react";
 
 export default function Book(props) {
   const [complete, setComplete] = useState(false);
   const [pageNumber, setPageNumber] = useState(false);
 
+  // if the Status for Complete is true, the DisplayReview form will render allowing user to submit a review and star rating
   const updateStatus = () => {
-    setComplete({ complete: true });
+    setComplete(true);
   };
 
+  // if the status for pageNum is true, the DisplayUpdate form will render allowing user to update page number
   const updatePageNum = () => {
-    setPageNumber({ pageNumber: true });
+    setPageNumber(true);
   };
 
+  // Form to update the page number on an in progress book
   const displayUpdate = () => {
     return (
       <form
@@ -27,13 +30,14 @@ export default function Book(props) {
       >
         <label>Please update new page number</label>
         <br />
-        <input type='number' min='0' />
+        <input type="number" min="0" max={props.result.page_count} />
         <br />
-        <input type='submit' />
+        <input type="submit" />
       </form>
     );
   };
 
+  // Form to submit review and star rating on completed book
   const displayReview = () => {
     return (
       <form
@@ -49,28 +53,30 @@ export default function Book(props) {
       >
         <label>Please rate this book from 1 to 5 stars</label>
         <br />
-        <input type='number' max='5' min='1' />
+        <input type="number" max="5" min="1" />
         <br />
         <label>Please write a brief review</label>
         <br />
-        <input type='text' />
+        <input type="text" />
         <br />
-        <input type='submit' value='Submit Rating' />
+        <input type="submit" value="Submit Rating" />
       </form>
     );
   };
   return (
-    <div className='book'>
+    // Renders the book element.
+    <div className="book">
       <img src={props.result.coverurl} />
       <h1>
         {props.result.title} by {props.result.author}
       </h1>
       <h2>{props.result.page_count} pages</h2>
-      {props.result.status === 'in progress' ? (
+      {/* If the status of the book is in progress, the below will render */}
+      {props.result.status === "in progress" ? (
         <div>
           <h2>On page {props.result.page_number}</h2>
-          <button onClick={updateStatus}>Complete</button>{' '}
-          <button onClick={updatePageNum}>Update Page</button>{' '}
+          <button onClick={updateStatus}>Complete</button>{" "}
+          <button onClick={updatePageNum}>Update Page</button>{" "}
           <button
             onClick={() =>
               props.removeBook(props.result.book_id, props.result.user_id)
@@ -78,13 +84,14 @@ export default function Book(props) {
           >
             Remove
           </button>
-          {complete ? displayReview() : ''}
-          {pageNumber ? displayUpdate() : ''}
+          {complete ? displayReview() : ""}
+          {pageNumber ? displayUpdate() : ""}
         </div>
       ) : (
-        ''
+        ""
       )}
-      {props.result.status === 'to be read' ? (
+      {/* If the status of the book is to be read, the below will render */}
+      {props.result.status === "to be read" ? (
         <div>
           <button
             onClick={() =>
@@ -92,7 +99,7 @@ export default function Book(props) {
             }
           >
             Mark as Reading
-          </button>{' '}
+          </button>{" "}
           <button
             onClick={() =>
               props.removeBook(props.result.book_id, props.result.user_id)
@@ -102,7 +109,7 @@ export default function Book(props) {
           </button>
         </div>
       ) : (
-        ''
+        ""
       )}
     </div>
   );

@@ -4,7 +4,7 @@ import React from 'react';
 // at time of commenting, user log in functionality has not been implemented, so will need to be updated to reflect true user info
 export default function Profile() {
   return (
-    <div>
+    <div> 
       <h1>Username</h1>
       <h2>Profile Image</h2>
     </div>

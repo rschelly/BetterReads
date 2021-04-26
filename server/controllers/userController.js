@@ -27,39 +27,38 @@ userController.getAllUsers = (req, res, next) => {
 userController.createUser = (req, res, next) => {
   //create a new user and store their username and password to the request bosy
   //user.find({}).then(data => console.log(data));
-  console.log(req.body.username, req.body.password)
+  console.log(req.body.username, req.body.password);
   user
-  .create(JSON.stringify({
-    username: req.body.username,
-    password: req.body.password,
-  }))
-  //then take the cookie object id and turn it into a number. Basically change the ugly ssid number into something legible.
-  // .then((response) => {
-  //   console.log("inside create user");
-  //   console.log(`this is res.locals: ${res.locals}`)
-  //     res.locals.username = req.body.username;
-  //     res.locals.id = response._doc._id.toHexString();
-  //     return next();
-  //   })
-  //   //if an erorr occurs, redirect back to the sign up page
-  //   .catch(() => res.send("error in create user"));
-  // },
-  ((err, newUser) => {
-    //if an erorr occurs, redirect back to the sign up page
-    if(err) res.redirect('/signup');
-    //then take the cookie object id and turn it into a number. Basically change the ugly ssid number into something legible.
-    res.locals.username = req.body.username;
-    res.locals.id = response._doc._id.toHexString();
-    return next();
-  })
-    .catch(() => res.render('./../client/html-scss/signup)'));
+    .create({
+      username: req.body.username,
+      password: req.body.password,
+    },
+    (err, newUser) => {
+      //if an erorr occurs, redirect back to the sign up page
+      if (err) next(err);
+      //then take the cookie object id and turn it into a number. Basically change the ugly ssid number into something legible.
+      res.locals.username = req.body.username;
+      res.locals.id = newUser._id.toHexString();
+      return next();
+    })
+      //then take the cookie object id and turn it into a number. Basically change the ugly ssid number into something legible.
+      // .then((response) => {
+      //   console.log("inside create user");
+      //   console.log(`this is res.locals: ${res.locals}`)
+      //     res.locals.username = req.body.username;
+      //     res.locals.id = response._doc._id.toHexString();
+      //     return next();
+      //   })
+      //   //if an erorr occurs, redirect back to the sign up page
+      //   .catch(() => res.send("error in create user"));
+      // },
 };
 
 // needs to go after create user //
 userController.addToSQL = (req, res, next) => {
   const querySelector = "INSERT INTO users (username) VALUES ($1)";
   const username = [res.locals.username];
-
+  console.log(username)
   db.query(querySelector, username)
     .then((res) => next())
     .catch((err) => console.log(err));
@@ -76,13 +75,13 @@ userController.verifyUser = (req, res, next) => {
         if (result) {
           return next();
         } else {
-          return res.redirect("/signup");
+          return res.redirect("/login");
         }
       });
     })
-    .catch(() => res.render("./../client/html-scss/signup"));
+    .catch(() => res.render("./../client/html-scss/login"));
 };
 
 module.exports = userController;
 
-// mongodb+srv://rschelly:mongopassword@cluster0.b5qc7.mongodb.net/betterreads?retryWrites=true&w=majority
+// mongodb+srv://rschelly:mongopassword@cluster0.b5qc7.mongodb.net/BetterReads?retryWrites=true&w=majority

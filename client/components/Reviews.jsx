@@ -1,48 +1,28 @@
-import axios from 'axios';
-import React from 'react';
-import Review from './Review.jsx';
+import axios from "axios";
+import React, { useState, useEffect } from "react";
+import Review from "./Review.jsx";
 
 // Displays Reviews/Ratings from Review_list in database
-// Ratings/reviews used interchangeably. Initial plan was to handle stars and comments separately, but
-// ultimately they got merged together. Sorry for the poor naming convention, will refactor if there's time
 
-export default class extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      ratings: [],
-    };
-  }
+export default function Reviews() {
+  const [reviews, setReviews] = useState([]);
 
   // initial fetch from db for ratings/reviews
-  componentDidMount() {
-    axios
-      .get('/db/ratings')
-      .then((data) => this.setState({ ratings: data.data.rows }));
-  }
+  useEffect(() => {
+    axios.get("/db/reviews").then((data) => setReviews(data.data.rows));
+  });
 
   // function that runs once ratings/reviews have populated
-  renderRatings() {
-    const reviews = [];
-    for (let i = 0; i < this.state.ratings.length; i += 1) {
-      reviews.push(
-        <Review
-          result={this.state.ratings[i]}
-          key={this.state.ratings[i].book_id}
-        />
-      );
+  const renderReviews = () => {
+    const newReviews = [];
+    for (let i = 0; i < reviews.length; i += 1) {
+      newReviews.push(<Review result={reviews[i]} key={reviews[i].book_id} />);
     }
-    return reviews;
-  }
-  render() {
-    return (
-      <div>
-        {this.state.ratings.length > 0 ? (
-          this.renderRatings()
-        ) : (
-          <h2>Loading...</h2>
-        )}
-      </div>
-    );
-  }
+    return newReviews;
+  };
+  return (
+    <div className="bodyDiv">
+      {reviews.length > 0 ? renderReviews() : <h2>Loading...</h2>}
+    </div>
+  );
 }

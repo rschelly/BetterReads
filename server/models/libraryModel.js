@@ -16,7 +16,7 @@ const pool = new Pool({
 // Users                          // Book List            
 // -----------------              // -------------------
 // _id : primary key              // _id : primary key
-// user_name                      // book_id : taken from Books Primary Key
+// username                       // book_id : taken from Books Primary Key
                                   // user_id : taken from User Primary Key
 // Books                          // status
 // ----------------               // page number
@@ -48,7 +48,6 @@ const pool = new Pool({
 
 module.exports = {
   query: (text, params, callback) => {
-    console.log('executed query', text);
     return pool.query(text, params, callback);
   }
 }

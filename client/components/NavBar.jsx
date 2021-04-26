@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import MyBooks from "./MyBooks.jsx";
+import CurrentlyReading from "./CurrentlyReading.jsx";
 import Reviews from "./Reviews.jsx";
 import Complete from "./Complete.jsx";
 import Profile from "./Profile.jsx";
@@ -14,32 +14,31 @@ export default function NavBar() {
   return (
     <Router>
       <nav>
-      <div id="profileLink">
-        <Profile />
+        <div id="profileLink">
+          <Profile />
         </div>
         <div className="navLinks">
-          <Link to="/newHome">Home</Link>
+          <Link to="/home">Home</Link>
         </div>
         <div className="navLinks">
-          <Link to="/MyBooks">My Books</Link>
+          <Link to="/CurrentlyReading">Currently Reading</Link>
         </div>
         <div className="navLinks">
-        <Link to="/ToBeRead">To Be Read</Link>
+          <Link to="/ToBeRead">To Be Read</Link>
         </div>
         <div className="navLinks">
-        <Link to="/Complete">Complete</Link>
+          <Link to="/Complete">Complete</Link>
         </div>
         <div className="navLinks">
-        <Link to="/Reviews">My Reviews</Link>
+          <Link to="/Reviews">My Reviews</Link>
         </div>
         <div className="navLinks">
-        <Link to="/Search">Search</Link>
+          <Link to="/Search">Search</Link>
         </div>
       </nav>
       <Switch>
         <Route exact path="/home" component={Main} />
-        <Route exact path="/newHome" component={Main} />
-        <Route path="/MyBooks" component={MyBooks} />
+        <Route path="/CurrentlyReading" component={CurrentlyReading} />
         <Route path="/ToBeRead" component={ToBeRead} />
         <Route path="/Complete" component={Complete} />
         <Route path="/Reviews" component={Reviews} />

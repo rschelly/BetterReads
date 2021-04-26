@@ -4,7 +4,7 @@
     - NavBar:
       - Profile
       - Main (Home - this is what displays by default)
-      - MyBooks
+      - CurrentlyReading
         - Book
       - To Be Read
         - Book
