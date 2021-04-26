@@ -70,7 +70,7 @@ export default function Book(props) {
         <div>
           <h2>On page {props.result.page_number}</h2>
           <button onClick={updateStatus}>Complete</button>{' '}
-          <button onClick={updatePageNum}>Update Page Number</button>{' '}
+          <button onClick={updatePageNum}>Update Page</button>{' '}
           <button
             onClick={() =>
               props.removeBook(props.result.book_id, props.result.user_id)

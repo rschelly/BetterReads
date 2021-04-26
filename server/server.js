@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
 // const cookieParser = require('cookie-parser');
+const bodyParser = require("body-parser");
 
 const userController = require('./controllers/userController');
 // const cookieController = require("./controllers/cookieController");
@@ -57,7 +58,7 @@ app.use('/db', libraryRouter);
 
 // catch all for requests to unknown route
 
-app.use((req, res) => res.status(400).send('Page Not Found'));
+app.use("*", (req, res) => res.status(400).send('Page Not Found'));
 
 // global error handler
 

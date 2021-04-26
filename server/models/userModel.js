@@ -10,12 +10,15 @@ const userSchema = new Schema({
   password: { type: String, required: true },
 });
 
-userSchema.pre('save', function (next) {
-  if (this.password) {
-    const salt = bcrypt.genSaltSync(10);
-    this.password = bcrypt.hashSync(this.password, salt);
-  }
-  return next();
-});
+// userSchema.pre('save', function (next) {
+//   if (this.password) {
+//     const salt = bcrypt.genSaltSync(10);
+//     this.password = bcrypt.hashSync(this.password, salt);
+//   }
+//   return next();
+// });
 
-module.exports = mongoose.model('User', userSchema);
+
+const user =  mongoose.model('User', userSchema);
+
+module.exports = user;

@@ -1,6 +1,7 @@
 import React from 'react';
 import Book from './Book.jsx';
 import axios from 'axios';
+import "../../html-scss/styles.scss";
 
 // Displays books that are currently in database as "In Progress"
 
