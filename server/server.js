@@ -45,14 +45,21 @@ app.get("/signup", (req, res) => {
 });
 
 //signup and login paths
-app.post("/signup", userController.createUser, userController.addToSQL, (req, res) => {
-  console.log("clicked signup button");
-  res.sendFile(path.join(__dirname, "../html-scss/index.html"));
-});
+app.post(
+  "/signup",
+  userController.createUser,
+  userController.addToSQL,
+  (req, res) => {
+    console.log("clicked signup button");
+    res.redirect("/home");
+    //res.sendFile(path.join(__dirname, "../html-scss/index.html"));
+  }
+);
 
 app.post("/login", userController.verifyUser, (req, res) => {
   console.log("clicked login button");
-  res.sendFile(path.join(__dirname, "../html-scss/index.html"));
+  res.redirect("/home");
+  //res.sendFile(path.join(__dirname, "../html-scss/index.html"));
 });
 
 app.get("/home", (req, res) => {

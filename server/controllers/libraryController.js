@@ -99,7 +99,7 @@ libraryController.getReviews = (req, res, next) => {
   INNER JOIN "books"
   ON review_list.book_id = books._id 
   WHERE review_list.user_id = $1`;
-  const userID = ["1"];
+  const userID = ["1"]; // needs updated to reflect real user id
 
   const reviewResults = db.query(querySelector, userID);
   reviewResults
@@ -127,7 +127,7 @@ libraryController.updateStatus = (req, res, next) => {
   const querySelector = `UPDATE book_list
   SET status = 'in progress'
   WHERE book_id = $1 AND user_id = $2`;
-  const queryVars = [req.body.bookID, req.body.userID];
+  const queryVars = [req.body.bookID, req.body.userID]; 
 
   const updateResults = db.query(querySelector, queryVars);
   updateResults.then(next()).catch((err) => {
@@ -258,7 +258,7 @@ libraryController.addToTBR = (req, res, next) => {
     req.body.ISBN,
   ];
 
-
+ // In query below, second array element needs updated to reflect true user ID 
   const addedResults = db.query(querySelectorBookAdd, queryVars);
   addedResults
     .then((data) => {

@@ -30,20 +30,6 @@ const pool = new Pool({
                                   // review
 
 
-// Temp data currently stored in database: 
-// USERS - (_id: 1, user_name: 'hello')
-// BOOKS:
-// (title: 'test title', author: 'author', page_count: 20, cover_url: 'coverurl', isbn: 12345)
-// (title: 'second title', author: 'second author', page_count: 25, cover_url: 'coverurl', isbn: 54321)
-// (title: 'third title', author: 'third author', page_count: 45, cover_url: 'coverurl', isbn: 87654)
-
-// BOOK LIST :
-// (book_id: 1, user_id: 1, status: 'in progress', page_number: 10)
-// (book_id: 2, user_id: 1, status: 'to be read', page_number: 0)
-// (book_id: 3, user_id: 1, status: 'completed', page_number: 0)
-
-// REVIEW LIST - (book_id: 3, user_id: 1, stars: 4, review: 'great')
-
 // export database to be used in controllers 
 
 module.exports = {

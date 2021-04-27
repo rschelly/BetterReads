@@ -68,9 +68,16 @@ userController.addToSQL = (req, res, next) => {
 
 userController.verifyUser = (req, res, next) => {
   //see if
-  User.findOne({ username: req.body.username }, "password")
-    .then((response) => {
+  console.log(req.body.username)
+  user.findOne({ username: req.body.username },
+    (err, response) => {
+      console.log('inside first cB')
+      if(err) {
+        console.log(err.message, 'coming from user Verify');
+        res.render("./../client/html-scss/login");
+      }
       res.locals.id = response._doc._id.toHexString();
+      console.log(response.password);
       bcrypt.compare(req.body.password, response.password, (err, result) => {
         if (result) {
           return next();
@@ -78,8 +85,7 @@ userController.verifyUser = (req, res, next) => {
           return res.redirect("/login");
         }
       });
-    })
-    .catch(() => res.render("./../client/html-scss/login"));
+  })
 };
 
 module.exports = userController;
