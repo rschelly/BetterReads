@@ -1,11 +1,14 @@
 - App
   - Home
     - Header
-    - NavBar:
+    - NavBar: ---set state here for books--
       - Profile
       - Main (Home - this is what displays by default)
       - CurrentlyReading
         - Book
+            --props  in navBar
+            --title
+            --author 
       - To Be Read
         - Book
       - Complete
@@ -15,3 +18,5 @@
       - Search
         - SearchResults
           - Search Book
+
+
